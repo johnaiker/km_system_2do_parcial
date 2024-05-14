@@ -1,20 +1,38 @@
 $().ready(function () { 
 
 	
-	Inputmask("####-##-##", {
+	// Inputmask("####-##-##", {
  
-		placeholder: "-",
-		greedy: false,
-		casing: "upper",
-		jitMasking: true
-	}).mask('.fecha_input');
+	// 	placeholder: "-",
+	// 	greedy: false,
+	// 	casing: "upper",
+	// 	jitMasking: true
+	// }).mask('.fecha_input');
 	
 	$(":input").inputmask();
-	// $("#fecha_ida").inputmask("xx-xxxxxxxx");
-	$("#signupForm").validate({ 
 
-		// In 'rules' user have to specify all the 
-		// constraints for respective fields 
+	$(function () {
+		$(".fecha_input").
+		datepicker({
+			dateFormat: 'yy-mm-dd',
+		});
+	});
+
+	$('#fecha_ida').change(function() { 
+		startDate = $(this).
+		datepicker('getDate'); 
+		$("#fecha_ret").
+		datepicker("option", "minDate", startDate); 
+	}) 
+
+	$('#fecha_ret').change(function() { 
+		endDate = $(this).
+		datepicker('getDate'); 
+		$("#fecha_ida").
+		datepicker("option", "maxDate", endDate); 
+	}) 
+
+	$("#signupForm").validate({ 
 		rules: { 
 			firstname: "required", 
 			lastname: "required", 
@@ -62,4 +80,11 @@ $().ready(function () {
 			agree: "Please accept our policy"
 		} 
 	}); 
+
+	$('#search_flights').submit((event)=> {
+		// event.preventDefault();
+		
+		alert("Buscando Vuelos...");
+	});
+	
 });

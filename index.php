@@ -1,25 +1,29 @@
 
 <?php
 include 'conection_db.php';
-// $servername = "localhost";
-// $username = "root";
-// $password = "246678";
+$servername = "localhost";
+$username = "root";
+$password = "246678";
+$database = "km_airlines";
 
 
-
-$conn = new mysqli("localhost","root","246678","km_airlines");
+//Conectamos con la base de datos en mysql, usando el host, usuario, contraseña y la base de datos a usar.
+$conn = new mysqli($servername,$username,$password,$database);
 
 $sql = "SELECT * FROM rutas";
 $result = $conn->query($sql);
 $destinos = [];
 
-$results_refs =& $result;
+$results_refs =& $result; // Creacion de una referencia(similar a un puntero), 
+//esto nos sera util porque podremos usar el valor de lo traido en la base de
+// datos sin modificar a la variable original
+// y asi poder leer sus valores
 
 if ($result->num_rows > 0) {
-  // output data of each row
+  // Ciclo while para cada dato traido de la Base de datos.
   while($row = $results_refs->fetch_assoc()) {
-    echo "origen: " . $row["origen"]. " - dias de vuelo: " . $row["dias_vuelo"]."<br>";
-    print_r(explode(',',$row['destinos']));
+    // echo "origen: " . $row["origen"]. " - dias de vuelo: " . $row["dias_vuelo"]."<br>";
+    // print_r(explode(',',$row['destinos']));
   }
 } else {
   echo "0 results";
@@ -41,12 +45,20 @@ if ($result->num_rows > 0) {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href=
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
     
   
     <!-- Debajo incluimos los plugins de jQuery -->
     <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script> 
     <script src= "https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"> </script> 
     <script src= "https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"> </script> 
+    
+ 
+    <script src=
+    "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+    </script>
 </head>
 <body style="margin: 0 auto; padding: 0; background-color: #e1e1e1;">
 <?php
@@ -114,7 +126,7 @@ if (!empty($_GET['flight_type']) && !empty($_GET['ruta_ida']) && !empty($_GET['r
         <div class="card py-4 mt-6 mx-auto text-center" >
             <h4 class="h4 text-uppercase">Seleccionar vuelo</h4>
             <div class="card-body">
-                <form action="./ver_vuelos.php" method="GET">
+                <form id="search_flights" action="./ver_vuelos.php" method="GET">
                     <div class="pe-3 card mx-auto" style="max-width: 300px;">
                         <div class="row g-3">
                             <div class="col">

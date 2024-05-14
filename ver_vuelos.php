@@ -1,26 +1,43 @@
 
 <?php
+
+//Incluir un archivo de PHP (archivo de base de datos); 
 include 'conection_db.php';
 // $servername = "localhost";
 // $username = "root";
 // $password = "246678";
 
-$ruta = '';
+$ruta = ''; // Ruta de ida 
+$rutaRet = ''; // Ruta de ida 
+$oneway = true; // Variable que se usa para saber si es solo ida o ida y vuelta
 
+// Concatenar la ruta de ida con la ruta de destino, para comprobar si hay vuelos en esa ruta
 if(!empty($_GET['ruta_ida']) && !empty($_GET['ruta_ret'])) {
- $ruta = $_GET['ruta_ida'] . $_GET['ruta_ret'];
+    $ruta = $_GET['ruta_ida'] . $_GET['ruta_ret'];
+    $rutaRet = $_GET['ruta_ret'] . $_GET['ruta_ida'] ;
 }
 
-
+// Conectar con la Base de Datos
 $conn = new mysqli("localhost","root","246678","km_airlines");
+$sql = "SELECT * FROM itinerario_vuelos WHERE ruta='". $ruta ."'"; // Query de Consulta donde se trae data cuando la ruta coincide
 
-$sql = "SELECT * FROM itinerario_vuelos WHERE ruta='". $ruta ."'";
-
-echo $sql;
 $result = $conn->query($sql);
-$destinos = [];
+// $destinos = [];
 
-$row;
+//Ver si el viaje es ida y vuelta
+if(!empty($_GET['flight_type'])) { 
+    if ($_GET['flight_type'] == "fullway") { 
+        $oneway = false;
+        
+        $sql = "SELECT * FROM itinerario_vuelos WHERE ruta='". $rutaRet ."'"; // Query de Consulta donde se trae data cuando la ruta coincide
+
+        // echo $sql;
+        $resultRet = $conn->query($sql);
+
+        // $row;
+
+    }
+   }
 
 // if ($result->num_rows > 0) {
 //   // output data of each row
@@ -51,66 +68,22 @@ $row;
     
   
     <!-- Debajo incluimos los plugins de jQuery -->
+    <link href= 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'>
     <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script> 
+    <script src= "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"> </script>
     <script src= "https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"> </script> 
     <script src= "https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"> </script> 
 </head>
 <body style="margin: 0 auto; padding: 0; background-color: #e1e1e1;">
 <?php
 
-
-$rutas = ["CCS", "MCB", "BRM", "BAR"];
-
-// $rutasDisponibles = array(
-//     array("fecha" => "01/05/2024", "ruta" => "CCS", "asientos" => 4),
-//     array("fecha" => "01/05/2024", "ruta" => "BRM", "asientos" => 0),
-//     array("fecha" => "01/05/2024", "ruta" => "BAR", "asientos" => 3),
-//     array("fecha" => "01/05/2024", "ruta" => "MCB", "asientos" => 6),
-//     array("fecha" => "15/04/2024", "ruta" => "CCS", "asientos" => 5),
-//     array("fecha" => "11/04/2024", "ruta" => "BRM", "asientos" => 7),
-//     array("fecha" => "16/04/2024", "ruta" => "BAR", "asientos" => 7),
-// );
-
-$disponibles = 12;
-function buscarVuelosDisp($rutaIda, $rutaVuelta, $tipoVuelo, $fechaIda, $fechaVuelta) {
-
-    $rutasDisponibles = array(
-        array("fecha" => "01/05/2024", "ruta" => "CCS", "asientos" => 4),
-        array("fecha" => "01/05/2024", "ruta" => "BRM", "asientos" => 0),
-        array("fecha" => "01/05/2024", "ruta" => "BAR", "asientos" => 3),
-        array("fecha" => "01/05/2024", "ruta" => "MCB", "asientos" => 6),
-        array("fecha" => "15/04/2024", "ruta" => "CCS", "asientos" => 5),
-        array("fecha" => "11/04/2024", "ruta" => "BRM", "asientos" => 7),
-        array("fecha" => "16/04/2024", "ruta" => "BAR", "asientos" => 7),
-    );
-    
-    if($tipoVuelo == "fullway") {
-        foreach ($rutasDisponibles as $ruta) {
-            echo"EL pepe".$ruta["fecha"];
-            # code...
-        }
-    } else {
-        // foreach ($rutasDisponibles as list($a, $b)) {
-        //     # code...
-        // }
+    if (!empty($_GET['flight_type']) && !empty($_GET['ruta_ida']) && !empty($_GET['ruta_ret']) && !empty($_GET['fecha_ida']) && !empty($_GET['fecha_ret'])) { 
+        $flighttype = $_GET['flight_type'];
+        $ruta_ida = $_GET['ruta_ida'];
+        $ruta_ret = $_GET['ruta_ret'];
+        $fecha_ida = $_GET['fecha_ida'];
+        $fecha_ret = $_GET['fecha_ret'];
     }
-    // if (filter_var($entrada, FILTER_VALIDATE_INT) !== false) {
-    //     echo "Ha ingresado un valor de tipo Int\n";
-    // } elseif (filter_var($entrada, FILTER_VALIDATE_BOOLEAN) !== false) {
-    //     echo "Ha ingresado un valor de tipo Bool\n";
-    // } else {
-    //     echo "Ha ingresado un valor de tipo String\n";
-    // }
-}
-
-if (!empty($_GET['flight_type']) && !empty($_GET['ruta_ida']) && !empty($_GET['ruta_ret']) && !empty($_GET['fecha_ida']) && !empty($_GET['fecha_ret'])) { 
-    $flighttype = $_GET['flight_type'];
-    $ruta_ida = $_GET['ruta_ida'];
-    $ruta_ret = $_GET['ruta_ret'];
-    $fecha_ida = $_GET['fecha_ida'];
-    $fecha_ret = $_GET['fecha_ret'];
-    buscarVuelosDisp($flighttype, $ruta_ida, $ruta_ret, $fecha_ida, $fecha_ret);
-}
 ?>
     <nav class="navbar bg-primary" data-bs-theme="dark">
         <div class="container">
@@ -118,43 +91,76 @@ if (!empty($_GET['flight_type']) && !empty($_GET['ruta_ida']) && !empty($_GET['r
         </div>
     </nav>
     <div class="container py-5">
+    <h4 class="h4 text-uppercase text-center mb-3">Seleccionar vuelo</h4>
         <div class="card py-4 mt-6 mx-auto text-center" >
-            <h4 class="h4 text-uppercase">Seleccionar vuelo</h4>
             <form action="index.php" method="POST">
                 <div class="card-body ">
-                    <?php if ($result->num_rows > 0) { ?>
+                    <h3 class="h3 text-left" style="color: black"> <span style="font-size: 1.2rem; font-weight: light!important;"><?= $fecha_ida ?></span> / Vuelos de Ida:</h3>
+                    <div class="row">
+                        <?php if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
 
+                        ?> 
                         
-
-                    <?php
-                        while ($row = $result->fetch_assoc()) {
-
-                     ?> <div class="card d-inline-block mx-auto" style="cursor: pointer; padding: 1rem!important;">
-                        <?php if($row['fecha'] != $_GET['fecha_ida'] ) {
-
-                        ?>
-                            <div class="" style="font-weight: bold; color: red">Fuera de la fecha seleccionada</div>
-                         <?php } ?>
-                        <div class="card-body">
-                         <h3 class="h3" style="color: green">CLASE <?= $row['clase']; ?></h3>
-                         <h3 class="h6">FECHA: <?= $row['fecha']; ?></h3>
-                         <h3 class="h6">Hora: <?= $row['hora']; ?></h3>
-                         <h3 class="h3">$<?= $row['precio']; ?></h3>
-                         <p>Asientos disponibles: <?= $row['asientos']; ?></p>
+                        <div class="col">
+                            <div class="card mx-auto" style="cursor: pointer; padding: 1rem!important;">
+                                <?php if($row['fecha'] != $_GET['fecha_ida'] ) {
+                                ?>
+                                    <div class="" style="font-weight: bold; color: red">Fuera de la fecha seleccionada</div>
+                                <?php } ?>
+                                <div class="card-body">
+                                <h3 class="h3" style="color: green">CLASE <?= $row['clase']; ?></h3>
+                                <h3 class="h6">FECHA: <?= $row['fecha']; ?></h3>
+                                <h3 class="h6">Hora: <?= $row['hora']; ?></h3>
+                                <h3 class="h3">$<?= $row['precio']; ?></h3>
+                                <p>Asientos disponibles: <?= $row['asientos']; ?></p>
+                                </div>
+                            </div>
                         </div>
+                            <?php
+                                }
+                                } else { ?>
+                            <div class="card mx-auto">
+                                <div class="card-body">
+                                    <h4 class="h4" style="color: tomato">NO HAY VUELOS DISPONIBLES PARA LA FECHA SELECCIONADA</h4>
+                                </div>
+                            </div>
+                            <?php } ?>
                     </div>
-                    <?php
-                        }
-                        } else { ?>
-                    <div class="card mx-auto">
-                        <div class="card-body">
-                            <h4 class="h4">NO HAY VUELOS DISPONIBLES PARA HOY</h4>
+
+                    <?php if(!$oneway) {
+                    ?>
+                            
+                            <div class="mt-6">_</div>
+                    <h3 class="h3 text-left" style="color: black"><span style="font-size: 1.2rem; font-weight: light!important;"><?= $fecha_ret ?></span> / Vuelos de Retorno:</h3>
+
+                    <?php if ($resultRet->num_rows > 0) { ?>
+                        <?php
+                            while ($row = $resultRet->fetch_assoc()) {
+
+                        ?> <div class="card d-inline-block mx-auto" style="cursor: pointer; padding: 1rem!important;">
+                            <?php if($row['fecha'] != $_GET['fecha_ret'] ) {
+
+                            ?>
+                                <div class="" style="font-weight: bold; color: red">Fuera de la fecha seleccionada</div>
+                            <?php } ?>
+                            <div class="card-body">
+                            <h3 class="h3" style="color: green">CLASE <?= $row['clase']; ?></h3>
+                            <h3 class="h6">FECHA: <?= $row['fecha']; ?></h3>
+                            <h3 class="h6">Hora: <?= $row['hora']; ?></h3>
+                            <h3 class="h3">$<?= $row['precio']; ?></h3>
+                            <p>Asientos disponibles: <?= $row['asientos']; ?></p>
+                            </div>
                         </div>
-                    </div>
-                    <?php } ?>
-                <!-- <div class="form-check">
-                </div> -->
-                
+                        <?php
+                            }
+                            } else { ?>
+                        <div class="card mx-auto">
+                            <div class="card-body">
+                                <h4 class="h4" style="color: tomato">NO HAY VUELOS DISPONIBLES PARA LA FECHA SELECCIONADA</h4>
+                            </div>
+                        </div>
+                        <?php } } ?>
                     <div class="col">
                         <button type="submit"  class="btn btn-primary mt-4 btn-lg"><i class="bi bi-arrow-left"></i> Volver</button>
                     </div>
