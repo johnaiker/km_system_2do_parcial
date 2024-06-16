@@ -1,13 +1,12 @@
 $().ready(function () { 
 
 	
-	// Inputmask("####-##-##", {
- 
-	// 	placeholder: "-",
-	// 	greedy: false,
-	// 	casing: "upper",
-	// 	jitMasking: true
-	// }).mask('.fecha_input');
+	Inputmask("##-##-##", {
+		placeholder: "-",
+		greedy: false,
+		casing: "upper",
+		jitMasking: true
+	}).mask('#fecha_n');
 	
 	$(":input").inputmask();
 
@@ -84,7 +83,7 @@ $().ready(function () {
 	$('#search_flights').submit((event)=> {
 		// event.preventDefault();
 		
-		alert("Buscando Vuelos...");
+		// alert("Buscando Vuelos...");
 	});
 	
 });
