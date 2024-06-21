@@ -32,16 +32,16 @@ $_SESSION["vuelo_info"] = [
 
     <?php 
 
-    // foreach ($_POST as $key => $value) {
-    //     echo "<tr>";
-    //     echo "<td>";
-    //     echo $key;
-    //     echo "</td>";
-    //     echo "<td>";
-    //     echo $value;
-    //     echo "</td>";
-    //     echo "</tr>";
-    // }
+    foreach ($_POST as $key => $value) {
+        echo "<tr>";
+        echo "<td>";
+        echo $key;
+        echo "</td>";
+        echo "<td>";
+        echo $value;
+        echo "</td>";
+        echo "</tr>";
+    }
 
     ?>
     <div class="container-fluid py-5">
@@ -79,13 +79,13 @@ $_SESSION["vuelo_info"] = [
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating mb-3" >
-                                        <input required type="text" class="form-control" name="fecha_n" id="fecha_n" placeholder="Name"  />
+                                        <input required type="text" class="form-control fecha_input" name="fecha_n" id="fecha_n" placeholder="fecha_n"  />
                                         <label for="fecha_n" class="d-flex align-items-center" ><span class="material-symbols-outlined me-2"> cake </span>  Fecha de nacimiento</labellabel >
                                     </div>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-outline-secondary d-block btn-lg me-3" onClick="javascript:history.go(-1)">  Volver </button>
+                                <button class="btn btn-outline-secondary d-block btn-lg me-3" onclick="location='index.php'">  Volver </button>
                                 <button type="submit" class="btn btn-primary d-block btn-lg"> Reservar </button>
                             </div>
                                         
@@ -128,8 +128,8 @@ $_SESSION["vuelo_info"] = [
                                     <tr>
                                         <td class="fw-bold"><?= $_POST["fecha"] ?></td>
                                         <td class="text-primary fw-bold fs-5"><?= $_POST["clase"] ?></td>
-                                        <td class="text-uppercase fw-bold">ida</td>
-                                        <td><?= $_POST["ruta_orig"]." ".$_POST["ruta_ret"] ?></td>
+                                        <td class="text-uppercase fw-bold"><?= $_POST["tipo"] == "ida" ? "Solo Ida" : "Con retorno"  ?></td>
+                                        <td><?= $_POST["ruta_orig"]."-".$_POST["ruta_ret"] ?></td>
                                         <td class="fw-bold text-success">$ <?= $_POST["precio"] ?></td>
                                     </tr>
                                 </tbody>
@@ -140,6 +140,9 @@ $_SESSION["vuelo_info"] = [
             </div>
         </div>
     </div>
+
+    <script src="./main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
     <script>
         function validar() {
             return $("#form_datos_usuario").validate();

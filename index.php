@@ -96,90 +96,96 @@ if (!empty($_GET['flight_type']) && !empty($_GET['ruta_ida']) && !empty($_GET['r
             <h4 class="h1 my-2 text-uppercase" style="color: white; font-weight: bold; margin-left: 5rem"><i class="bi bi-airplane-engines-fill"></i> Km airlines</h4>
         </div>
     </nav>
-    <div class="container py-5">
-        <div class="card py-4 mt-6 mx-auto text-center" >
-            <h4 class="h4 text-uppercase">Seleccionar vuelo</h4>
-            <hr class="my-3 mx-3">
-            <div class="card-body">
-                <form id="search_flights" action="./ver_vuelos.php" method="GET">
-                    <div class="p-3 card mx-auto" style="max-width: 300px;">
-                        <div class="row justify-content-space-between align-items-center">
-                            <div class="col-6">
-                                <input class="form-check-input" type="radio" name="flight_type" id="exampleRadios1" value="fullway" checked>
-                                <label class="form-check-label" for="exampleRadios1"> Ida y vuelta </label>
-                            </div>
-                            <div class="col-6">   
-                                <input class="form-check-input" type="radio" name="flight_type" id="exampleRadios2" value="oneway" >
-                                <label class="form-check-label" for="exampleRadios2"> Solo ida </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3 align-items-end justify-content-center">
-                        <div class="mt-2 col-md-2" style="text-align: left">
-                            <label for="ruta_ida" class="form-check-label pb-2 pl-2"><span class="material-symbols-outlined">flight_takeoff</span> Ruta de Origen </label>
-
-                            <select required name="ruta_ida" class="py-2 form-control form-select" aria-label="Disabled select" id="ruta_ida">
-                                
-                                <option selected value="">Seleccione</option>
-                                <?php
-                                    foreach ($rutas as $ruta => $i) {
-                                ?>
-
-                                    <option  value="<?= $i ?>"><?= $ruta ?></option>
-                                <?php } ?>
-                                <!-- <option value="2">Two</option>
-                                <option value="3">Three</option> -->
-                            </select>
-                        </div>
-                        <div class="mt-2 col-md-2" style="text-align: left" id="ruta_retorno">
-                            <label for="ruta_ret" class="form-check-label pb-2 pl-2"> <span class="material-symbols-outlined">flight_land</span> Ruta Destino</label>
-
-                            <select required class="form-control form-select" name="ruta_ret" aria-label="Disabled select" id="ruta_ret">
-                                
-                                <option selected value="">Seleccione</option>
-                                <?php
-                                    foreach ($rutas as $ruta  => $i) {
-                                ?>
-
-                                <option value="<?= $i ?>"><?= $ruta ?></option>
-                                <?php } ?>
-                                <!-- <option value="2">Two</option>
-                                <option value="3">Three</option> -->
-                            </select>
-                        </div>
-                        <div class="col text-start">
-                            <div class="row align-items-end">
-                                <div class="col my-2">
-                                    <div class="">
-                                        <label for="fecha_ida" class="form-check-label pb-2 pl-2"><i class="bi bi-calendar"></i> fecha de Ida </label>
-                                        <input  required name="fecha_ida" type="text" placeholder="yyyy-mm-dd" class="form-control fecha_input" id="fecha_ida" >
-                                    </div>
+    
+    <div class="banner d-flex align-items-center justify-content-center" style="position: relative;">
+        <div class="d-flex align-items-center justify-content-center" style="width: 100%;">
+            <img src="./img/airline_banner.jpg" alt="Banner_aerolinea" style="width: 100%; max-height: 600px; filter: brightness(50%);">
+        </div>
+        <div class="container py-5" style="position: absolute; bottom: -8rem; left: 0; right: 0">
+            <div class=" py-4 mt-6 mx-auto text-center" >
+                <h4 class="fs-1 mb-5 text-light text-uppercase fw-bold">Seleccionar vuelo</h4>
+                <!-- <hr class="my-3 mx-3"> -->
+                <div class="card" style="box-shadow: -4px 14px 75px -28px rgba(0,0,0,0.75);">
+                    <form class="card-body" id="search_flights" action="./ver_vuelos.php" method="GET">
+                        <div class="p-3 card mx-auto" style="max-width: 300px;">
+                            <div class="row justify-content-space-between align-items-center">
+                                <div class="col-6">
+                                    <input class="form-check-input" type="radio" name="flight_type" id="exampleRadios1" value="fullway" checked>
+                                    <label class="form-check-label" for="exampleRadios1"> Con retorno </label>
                                 </div>
-                                <div class="col my-2" >
+                                <div class="col-6">   
+                                    <input class="form-check-input" type="radio" name="flight_type" id="exampleRadios2" value="oneway" >
+                                    <label class="form-check-label" for="exampleRadios2"> Solo ida </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-2 align-items-center justify-content-center p-4" style="border: 1px solid #00000054; border-radius: 10px; ">
+                            <div class="mt-2 col-md-2" style="text-align: left">
+                                <label for="ruta_ida" class="form-check-label pb-2 pl-2"><span class="material-symbols-outlined">flight_takeoff</span> Ruta de Origen </label>
+
+                                <select required name="ruta_ida" class="py-2 form-control form-select" aria-label="Disabled select" id="ruta_ida">
                                     
-                                    <div class="" id="fecha_retorno">
-                                        <label for="fecha_ret" class="form-check-label pb-2 pl-2"><i class="bi bi-calendar"></i> fecha retorno </label>
-                                        <input required name="fecha_ret" type="text" placeholder="yyyy-mm-dd" class="form-control fecha_input" id="fecha_ret" >
+                                    <option selected value="">Seleccione</option>
+                                    <?php
+                                        foreach ($rutas as $ruta => $i) {
+                                    ?>
+
+                                        <option class="fw-bold text-dark" value="<?= $i ?>"><?= $ruta ?></option>
+                                    <?php } ?>
+                                    <!-- <option value="2">Two</option>
+                                    <option value="3">Three</option> -->
+                                </select>
+                            </div>
+                            <div class="mt-2 col-md-2" style="text-align: left" id="ruta_retorno">
+                                <label for="ruta_ret" class="form-check-label pb-2 pl-2"> <span class="material-symbols-outlined">flight_land</span> Ruta Destino</label>
+
+                                <select required class="form-control form-select" name="ruta_ret" aria-label="Disabled select" id="ruta_ret">
+                                    
+                                    <option selected value="">Seleccione</option>
+                                    <?php
+                                        foreach ($rutas as $ruta  => $i) {
+                                    ?>
+
+                                    <option class="fw-bold text-dark" value="<?= $i ?>"><?= $ruta ?></option>
+                                    <?php } ?>
+                                    <!-- <option value="2">Two</option>
+                                    <option value="3">Three</option> -->
+                                </select>
+                            </div>
+                            <div class="col text-start">
+                                <div class="row align-items-end">
+                                    <div class="col my-2">
+                                        <div class="">
+                                            <label for="fecha_ida" class="form-check-label pb-2 pl-2"><i class="bi bi-calendar"></i> fecha de Ida </label>
+                                            <input  required name="fecha_ida" type="text" placeholder="yyyy-mm-dd" class="form-control fecha_input" id="fecha_ida" >
+                                        </div>
+                                    </div>
+                                    <div class="col my-2" >
+                                        
+                                        <div class="" id="fecha_retorno">
+                                            <label for="fecha_ret" class="form-check-label pb-2 pl-2"><i class="bi bi-calendar"></i> fecha retorno </label>
+                                            <input required name="fecha_ret" type="text" placeholder="yyyy-mm-dd" class="form-control fecha_input" id="fecha_ret" >
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-
+                            <div class="col-md-2">
+                                <button type="submit"  class="btn btn-primary mt-4 btn-lg"><i class="bi bi-search"></i> Buscar</button>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <button type="submit"  class="btn btn-primary mt-4 btn-lg"><i class="bi bi-search"></i> Buscar</button>
+                    </form>
+
+
+                <!-- <div class="form-check">
+
+                </div> -->
+                </div>
+                <div class="row p-3" id="error_message" style="display: none">
+                    <div class="col-12 ">
+                        <div class="d-inline-block alert alert-danger fs-4 fw-bold">
+                            <span id="message"></span>
                         </div>
-                    </div>
-                </form>
-
-
-            <!-- <div class="form-check">
-
-            </div> -->
-            </div>
-            <div class="row hidden p-3" id="error_message">
-                <div class="col-12 ">
-                    <div class="d-inline-block alert alert-danger fs-4 fw-bold">
-                        <span id="message"></span>
                     </div>
                 </div>
             </div>
@@ -192,17 +198,20 @@ if (!empty($_GET['flight_type']) && !empty($_GET['ruta_ida']) && !empty($_GET['r
 
     <script>
         
-        $("#error_message").addClass("hidden")
+        // $("#error_message").fadeOut()
+        $("#error_message").fadeOut()
         $("#message").text("")
 
         $("#ruta_retorno").change((e) => {
             if (e.target.value == $("#ruta_ida").val()) {
                 e.target.value = "";
-                $("#error_message").removeClass("hidden")
+                // $("#error_message").removeClass("hidden")
                 $("#message").text("No puede coincidir la ruta de ida con la de retorno")
+                
+                $("#error_message").fadeIn().fadeOut(6000)
             } else {
                 
-                $("#error_message").addClass("hidden")
+                $("#error_message").fadeOut()
                 $("#message").text("")
             }
         });
@@ -210,11 +219,11 @@ if (!empty($_GET['flight_type']) && !empty($_GET['ruta_ida']) && !empty($_GET['r
         $("#ruta_ida").change((e) => {
             if (e.target.value == $("#ruta_retorno").val()) {
                 e.target.value = "";
-                $("#error_message").removeClass("hidden")
+                $("#error_message").fadeIn().fadeOut(6000)
                 $("#message").text("No puede coincidir la ruta de ida con la de retorno")
             } else {
                 
-                $("#error_message").addClass("hidden")
+                $("#error_message").fadeOut()
                 $("#message").text("")
             }
         })

@@ -37,7 +37,7 @@ if(!empty($_GET['flight_type'])) {
         // $row;
 
     }
-   }
+}
 
 // if ($result->num_rows > 0) {
 //   // output data of each row
@@ -129,7 +129,7 @@ if(!empty($_GET['flight_type'])) {
                             
                     <hr class="my-4">
                             <!-- <div class="mt-6">_</div> -->
-                    <h3 class="h3 text-left" style="color: black"> Vuelos de Retorno: <span style="font-size: 0.9rem; font-weight: light!important;"><?= $fecha_ret ?></span></h3>
+                    <h3 class="h3 text-left" style="color: black"> <span class="fs-1 material-symbols-outlined me-2"> flight_land </span> Vuelos de Retorno: <span style="font-size: 0.9rem; font-weight: light!important;"><?= $fecha_ret ?></span></h3>
 
                     <?php if ($resultRet->num_rows > 0) { ?>
                         <?php
@@ -165,7 +165,7 @@ if(!empty($_GET['flight_type'])) {
                         </div>
                         <?php } } ?>
                     <div class="col mt-4">
-                        <button class="btn btn-outline-secondary me-4  btn-lg" onclick="history.go(-1)"> Volver</button>
+                        <button class="btn btn-outline-secondary me-4  btn-lg" onclick="location = './index.php'"> Volver</button>
                         <button type="submit"  class="btn btn-primary  btn-lg"> Continuar</button>
                     </div>
                 </div>
@@ -180,8 +180,13 @@ if(!empty($_GET['flight_type'])) {
         </div>
     </div>
     </div>
+    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>    
+
+        
+    
         function Cotizar(fecha, clase, tipo, precio, asientos) {
             console.log("A cotizar xdxd")
                 console.log("Creando reserva.... ", fecha, clase, tipo, precio, asientos);

@@ -87,7 +87,7 @@ session_start();
                         </div>
                         
                         <div class="d-flex justify-content-center mt-5"> 
-                            <button class="btn btn-outline-secondary d-block btn-lg me-3" onClick="javascript:history.go(-1)">  Volver </button>
+                            <button class="btn btn-outline-secondary d-block btn-lg me-3" onclick="location = './index.php'">  Volver </button>
                             <button type="submit" class="btn btn-primary d-block btn-lg"> Pagar </button>
                         </div>
                     </form>
@@ -177,3 +177,8 @@ session_start();
         </div>
     </div>
 </body>
+
+
+<script>
+    
+</script>
